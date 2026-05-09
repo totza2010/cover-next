@@ -38,6 +38,27 @@ class Download {
             }
         }
 
+        // Call say_thanks AJAX before download
+        await new Promise((resolve) => {
+            Log(this.data.hash, 'calling say_thanks...');
+            GM_xmlhttpRequest({
+                method: "GET",
+                url: window.location.origin + '/ajax.php?action=say_thanks&id=' + this.data.detailId,
+                onload: (res) => {
+                    Log(this.data.hash, 'say_thanks response received');
+                    resolve();
+                },
+                ontimeout: () => {
+                    Log(this.data.hash, 'say_thanks timeout');
+                    resolve();
+                },
+                onerror: () => {
+                    Log(this.data.hash, 'say_thanks error');
+                    resolve();
+                }
+            });
+        });
+
         //download
         window.location.href = this.link;
 
