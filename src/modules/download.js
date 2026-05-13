@@ -29,7 +29,7 @@ class Download {
             Log(this.data.hash, 'try hook download...');
 
             let detail = await this.data.hook.detail();
-            this.link  = $('a[title="Download this file"]', detail).attr('href');
+            this.link  = $('a[href^="downloadnew.php?id="]', detail).attr('href');
 
             if (this.link === undefined) {
                 Log(this.data.hash, 'download fail!');
@@ -78,7 +78,7 @@ class Download {
             Log('set downloaded and cache');
         }
 
-        $(html).on('click', 'a[title="Download this file"]', () => {
+        $(html).on('click', 'a[href^="downloadnew.php?id="]', () => {
             Log('Click Download');
             Log('set downloaded...');
 
